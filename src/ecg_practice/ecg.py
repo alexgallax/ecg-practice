@@ -3,6 +3,9 @@ from ecg_practice.models.interpretation import Interpretation, Diagnosis, Urgenc
 
 
 def interpret_ecg(data: ECGData) -> Interpretation:
+    if not data:
+        raise ValueError("Данные ЭКГ не могут быть пустыми")
+
     if data.st_segment == STSegment.ELEVATION and data.q_wave:
         return Interpretation(
             diagnosis=Diagnosis.INFARCTION,
@@ -52,3 +55,8 @@ def analyze_heart_rate(heart_rate: float) -> Interpretation:
             diagnosis=Diagnosis.TACHYCARDIA,
             urgency=Urgency.PLANNED,
         )
+
+
+def average_heart_rate(heart_rates: list[float]) -> float:
+    total = sum(r for r in heart_rates)
+    return total / len(heart_rates)
