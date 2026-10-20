@@ -2,6 +2,7 @@ import pytest
 
 from ecg_practice.models.ecg_data import ECGData, Rhythm, STSegment
 
+
 @pytest.fixture
 def normal_data() -> ECGData:
     return ECGData(
@@ -10,6 +11,21 @@ def normal_data() -> ECGData:
         st_segment=STSegment.NORMAL,
         q_wave=False,
     )
+
+
+@pytest.fixture
+def base_heart_rate_data(request) -> ECGData:
+    data = {
+        "heart_rate": 75,
+        "rhythm": Rhythm.REGULAR,
+        "st_segment": STSegment.NORMAL,
+        "q_wave": False,
+    }
+
+    override = getattr(request, "param", {})
+    data.update(override)
+
+    return ECGData(**data)
 
 
 @pytest.fixture
