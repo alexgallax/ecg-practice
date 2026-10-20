@@ -57,3 +57,7 @@ addopts = """
     -ra
     --strict-markers
 """
+
+markers = [
+    "critical: критичные тесты",
+]
